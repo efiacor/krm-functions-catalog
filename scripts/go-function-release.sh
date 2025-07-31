@@ -45,18 +45,19 @@ source "${scripts_dir}"/git-tag-parser.sh
 source "${scripts_dir}"/docker.sh
 
 versions=$(get_versions "${TAG}")
+IFS=',' read -ra version_array <<< "$versions"
 
 FUNCTION_TYPE="${FUNCTION_TYPE:-curated}"
 EXTRA_BUILD_ARGS="${EXTRA_BUILD_ARGS:-}"
 
 case "$1" in
   build)
-    for version in ${versions}; do
+    for version in "${version_array[@]}"; do
       docker_build "load" "${FUNCTION_TYPE}" "go" "${CURRENT_FUNCTION}" "${version}" "${EXTRA_BUILD_ARGS}"
     done
     ;;
   push)
-    for version in ${versions}; do
+    for version in "${version_array[@]}"; do
       docker_build "push" "${FUNCTION_TYPE}" "go" "${CURRENT_FUNCTION}" "${version}"
     done
     ;;
