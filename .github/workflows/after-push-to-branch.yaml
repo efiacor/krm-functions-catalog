@@ -36,5 +36,3 @@ jobs:
       run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
     - name: dev/cd/after-branch-push
       run: GIT_REF=${GITHUB_REF} IMAGE_REPO=ghcr.io/${{ github.repository }} dev/cd/after-push-to-branch
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
