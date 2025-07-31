@@ -16,7 +16,7 @@
 # limitations under the License.
 
 # This script does the following things:
-# - Enforce several rules (e.g. required fields) in metadata.yaml for each curated function.
+# - Enforce several rules (e.g. required fields) in krm-fn-metadata.yaml for each curated function.
 # - Ensure the URLs in the examples are correct.
 #
 # To skip process a code block in a markdown file, you can add <!-- @skip -->
@@ -32,7 +32,7 @@ import subprocess
 
 import yaml
 
-metadata_filename = 'metadata.yaml'
+metadata_filename = 'krm-fn-metadata.yaml'
 directories_to_skip = ['_template', 'dist', 'node_modules']
 examples_directory = 'examples'
 functions_directory = 'functions'
@@ -76,7 +76,7 @@ def validate_examples_dir_for_master_branch(fn_name_to_examples, contrib):
             if dir in examples_directories_to_skip:
                 continue
             if not dir in examples_seen:
-                raise Exception(f'directory {dir} is NOT in the metadata.yaml file of any functions')
+                raise Exception(f'directory {dir} is NOT in the krm-fn-metadata.yaml file of any functions')
 
 
 def validate_functions_dir_for_master_branch(contrib):
@@ -300,7 +300,7 @@ def validate_metadata(metadata, branch, path, fn, examples_list, contrib):
     if metadata['sourceURL'] != desired_source_url:
         raise Exception(f'{fn}: "sourceURL" should be "{desired_source_url}"')
     if len(examples_list) == 0:
-        raise Exception(f'{fn}: there must be at least one example listed in metadata.yaml file')
+        raise Exception(f'{fn}: there must be at least one example listed in krm-fn-metadata.yaml file')
     for example in examples_list:
         if contrib:
             desired_example_pkg_url = f'https://github.com/kptdev/krm-functions-catalog/tree/{branch}/contrib/examples/{example}'

@@ -18,20 +18,20 @@
 # CURRENT_FUNCTION is the target kpt function. e.g. set-namespace.
 # TAG can be any valid docker tags. If the TAG is semver e.g. v1.2.3, shorter
 # version of this semver will be tagged too. e.g. v1.2 and v1.
-# DEFAULT_GCR is the desired container registry e.g. gcr.io/kpt-fn. This is
-# optional. If not set, the default value gcr.io/kpt-fn-contrib will be used.
-# If GCR_REGISTRY is set, it will override DEFAULT_GCR.
+# DEFAULT_CR is the desired container registry e.g. ghcr.io/kptdev/krm-functions-catalog. This is
+# optional. If not set, the default value ghcr.io/kptdev/krm-functions-catalog/krm-fn-contrib will be used.
+# If CR_REGISTRY is set, it will override DEFAULT_CR.
 # example 1:
-# Invocation: DEFAULT_GCR=gcr.io/kpt-fn CURRENT_FUNCTION=set-namespace TAG=v1.2.3 go-function-release.sh build
-# It builds gcr.io/kpt-fn/set-namespace:v1.2.3, gcr.io/kpt-fn/set-namespace:v1.2
-# and gcr.io/kpt-fn/set-namespace:v1.
-# Invocation: DEFAULT_GCR=gcr.io/kpt-fn CURRENT_FUNCTION=set-namespace TAG=v1.2.3 go-function-release.sh push
+# Invocation: DEFAULT_CR=ghcr.io/kptdev/krm-functions-catalog CURRENT_FUNCTION=set-namespace TAG=v1.2.3 go-function-release.sh build
+# It builds ghcr.io/kptdev/krm-functions-catalog/set-namespace:v1.2.3, ghcr.io/kptdev/krm-functions-catalog/set-namespace:v1.2
+# and ghcr.io/kptdev/krm-functions-catalog/set-namespace:v1.
+# Invocation: DEFAULT_CR=ghcr.io/kptdev/krm-functions-catalog CURRENT_FUNCTION=set-namespace TAG=v1.2.3 go-function-release.sh push
 # It pushes the above 3 images.
 # example 2:
 # Invocation: CURRENT_FUNCTION=set-namespace TAG=unstable go-function-release.sh build
-# It builds gcr.io/kpt-fn/set-namespace:unstable.
+# It builds ghcr.io/kptdev/krm-functions-catalog/set-namespace:unstable.
 # Invocation: CURRENT_FUNCTION=set-namespace TAG=unstable go-function-release.sh push
-# It pushes gcr.io/kpt-fn/set-namespace:unstable.
+# It pushes ghcr.io/kptdev/krm-functions-catalog/set-namespace:unstable.
 
 # This script currently is used in functions/go/Makefile.
 
@@ -46,7 +46,7 @@ source "${scripts_dir}"/docker.sh
 
 versions=$(get_versions "${TAG}")
 
-FUNCTION_TYPE="$2"
+FUNCTION_TYPE="${FUNCTION_TYPE:-curated}"
 EXTRA_BUILD_ARGS="${EXTRA_BUILD_ARGS:-}"
 
 case "$1" in

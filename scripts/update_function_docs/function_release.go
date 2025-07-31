@@ -147,7 +147,7 @@ func (fr *functionRelease) readDocPaths() error {
 	return nil
 }
 
-// parseMetadata from metadata.yaml and set example paths
+// parseMetadata from krm-fn-metadata.yaml and set example paths
 func (fr *functionRelease) parseMetadata(examplesPath string) error {
 	type metadata struct {
 		ExamplePackageUrls []string `yaml:"examplePackageURLs"`
@@ -156,7 +156,7 @@ func (fr *functionRelease) parseMetadata(examplesPath string) error {
 		return fmt.Errorf("expected FunctionPath in parseMetadata")
 	}
 
-	metadataPath := filepath.Join(fr.FunctionPath, "metadata.yaml")
+	metadataPath := filepath.Join(fr.FunctionPath, "krm-fn-metadata.yaml")
 	var md metadata
 	yamlFile, err := ioutil.ReadFile(metadataPath)
 	if err != nil {
@@ -199,7 +199,7 @@ func (fr *functionRelease) updateFunctionDoc() error {
 	if err := fr.updateDoc(functionReadme); err != nil {
 		return err
 	}
-	functionMetadata := filepath.Join(fr.FunctionPath, "metadata.yaml")
+	functionMetadata := filepath.Join(fr.FunctionPath, "krm-fn-metadata.yaml")
 	if err := fr.updateDoc(functionMetadata); err != nil {
 		return err
 	}

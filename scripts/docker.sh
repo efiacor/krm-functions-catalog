@@ -17,8 +17,8 @@
 
 repo_base=$(cd "$(dirname "$(dirname "$0")")" || exit ; pwd)
 
-DEFAULT_GCR=${DEFAULT_GCR:-gcr.io/kpt-fn-contrib}
-GCR_REGISTRY=${GCR_REGISTRY:-${DEFAULT_GCR}}
+DEFAULT_CR=${DEFAULT_CR:-ghcr.io/kptdev/krm-functions-catalog/krm-fn-contrib}
+CR_REGISTRY=${CR_REGISTRY:-${DEFAULT_CR}}
 
 function err {
   echo "$1"
@@ -60,14 +60,14 @@ function docker_build {
   build_args+=(--build-arg "BUILDER_IMAGE=${BUILDER_IMAGE}")
   build_args+=(--build-arg "BASE_IMAGE=${BASE_IMAGE}")
 
-  echo "building ${GCR_REGISTRY}/${name}:${tag}"
+  echo "building ${CR_REGISTRY}/${name}:${tag}"
 
   case "${action}" in
     load)
       IFS=' ' read -r -a extra_args_array <<< "${EXTRA_BUILD_ARGS:-}"
       # Use + conditional parameter expansion to protect from unbound array variable
       docker buildx build --load \
-        -t "${GCR_REGISTRY}/${name}:${tag}" \
+        -t "${CR_REGISTRY}/${name}:${tag}" \
         -f "${dockerfile}" \
         "${build_args[@]+"${build_args[@]}"}" \
         "${extra_args_array[@]}" \
@@ -76,7 +76,7 @@ function docker_build {
     push)
       # build and push multi-arch image.
       docker buildx build --push \
-        -t "${GCR_REGISTRY}/${name}:${tag}" \
+        -t "${CR_REGISTRY}/${name}:${tag}" \
         -f "${dockerfile}" \
         --platform "linux/amd64,linux/arm64" \
         "${build_args[@]+"${build_args[@]}"}" \

@@ -271,7 +271,7 @@ func getFunctions(branches []string, source string, dest string) []function {
 		}
 
 		// Functions with the hidden field enabled should not be processed.
-		metadataPath := strings.TrimSpace(fmt.Sprintf("%v:%v", b, filepath.Join(relativeFuncPath, "metadata.yaml")))
+		metadataPath := strings.TrimSpace(fmt.Sprintf("%v:%v", b, filepath.Join(relativeFuncPath, "krm-fn-metadata.yaml")))
 		md, err := getMetadata(metadataPath)
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "Error getting metadata for %q from %q: %v\n", funcName, b, err)
@@ -393,7 +393,7 @@ func copyReadme(b string, funcName string, relativeFuncPath string, versionDest 
 func getMetadata(metadataPath string) (metadata, error) {
 	var buf bytes.Buffer
 	var md metadata
-	// Get the content of metadata.yaml from the appropriate release branch.
+	// Get the content of krm-fn-metadata.yaml from the appropriate release branch.
 	cmd := exec.Command("git", "cat-file", "blob", metadataPath)
 	cmd.Stdout = &buf
 	err := cmd.Run()

@@ -15,7 +15,7 @@
 SHELL=/bin/bash
 GOPATH := $(shell go env GOPATH)
 TAG ?= unstable
-GCR = gcr.io/kpt-fn
+CR = ghcr.io/kptdev/krm-functions-catalog
 GOBIN := $(shell go env GOPATH)/bin
 
 # Edit this list to contain all go functions
@@ -42,7 +42,9 @@ FUNCTIONS := \
 	set-project-id \
 	source-gcloud-config \
 	starlark \
-	upsert-resource
+	upsert-resource \
+	set-name-prefix \
+	apply-setters
 
 FUNCTION_KO := \
 	set-name-prefix \
@@ -96,18 +98,18 @@ build: generate $(FUNCTION_BUILDS) ## Build all function images. 'TAG' env is us
 
 .PHONY: $(FUNCTION_BUILDS)
 $(FUNCTION_BUILDS):
-	$(MAKE) CURRENT_FUNCTION=$(subst -BUILD,,$@) TAG=$(TAG) DEFAULT_GCR=$(GCR) func-build
+	$(MAKE) CURRENT_FUNCTION=$(subst -BUILD,,$@) TAG=$(TAG) DEFAULT_CR=$(CR) func-build
 
 .PHONY: push
 push: $(FUNCTION_KO_PUSH) $(FUNCTION_PUSH) ## Push images to registry. WARN: This operation should only be done in CI environment.
 
 .PHONY: $(FUNCTION_PUSH)
 $(FUNCTION_PUSH):
-	$(MAKE) CURRENT_FUNCTION=$(subst -PUSH,,$@) TAG=$(TAG) DEFAULT_GCR=$(GCR) func-push
+	$(MAKE) CURRENT_FUNCTION=$(subst -PUSH,,$@) TAG=$(TAG) DEFAULT_CR=$(CR) func-push
 
 .PHONY: $(FUNCTION_KO_PUSH)
 $(FUNCTION_KO_PUSH):
-	cd $(subst -PUSH,,$@) && $(MAKE) IMAGE_REPO=$(GCR) IMAGE_TAG=$(TAG) push
+	cd $(subst -PUSH,,$@) && $(MAKE) IMAGE_REPO=$(CR) IMAGE_TAG=$(TAG) push
 
 .PHONY: check-licenses
 check-licenses: install-go-licenses $(FUNCTION_CHECKLICENSES)
