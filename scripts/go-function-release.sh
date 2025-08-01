@@ -58,7 +58,7 @@ case "$1" in
     ;;
   push)
     for version in "${version_array[@]}"; do
-      docker_build "push" "${FUNCTION_TYPE}" "go" "${CURRENT_FUNCTION}" "${version}"
+      docker_build "push" "${FUNCTION_TYPE}" "go" "${CURRENT_FUNCTION}" "${version}" "${EXTRA_BUILD_ARGS}"
     done
     ;;
   *)

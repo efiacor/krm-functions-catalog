@@ -74,12 +74,14 @@ function docker_build {
         "${function_dir}"    
       ;;
     push)
+      IFS=' ' read -r -a extra_args_array <<< "${EXTRA_BUILD_ARGS:-}"
       # build and push multi-arch image.
       docker buildx build --push \
         -t "${CR_REGISTRY}/${name}:${tag}" \
         -f "${dockerfile}" \
         --platform "linux/amd64,linux/arm64" \
         "${build_args[@]+"${build_args[@]}"}" \
+        "${extra_args_array[@]}" \
         "${function_dir}"    
       ;;
     *)
