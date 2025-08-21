@@ -14,6 +14,7 @@
 SHELL=/bin/bash
 export TAG ?= unstable
 export DEFAULT_CR ?= ghcr.io/kptdev/krm-functions-catalog
+export DEFAULT_CONTRIB_CR ?= ghcr.io/kptdev/krm-functions-catalog/krm-fn-contrib
 
 
 .DEFAULT_GOAL := help
@@ -64,8 +65,10 @@ build: ## Build all function images.
 	cd functions/go && $(MAKE) build
 	cd contrib/functions/go && $(MAKE) build
 
-push: ## Push images to registry. WARN: This operation should only be done in CI environment.
+push-curated: ## Push images to registry. WARN: This operation should only be done in CI environment.
 	cd functions/go && $(MAKE) push
+
+push-contrib: ## Push images to registry. WARN: This operation should only be done in CI environment.
 	cd contrib/functions/go && $(MAKE) push
 
 site-generate: ## Collect function branches and generate a catalog of their examples and documentation using kpt next.
