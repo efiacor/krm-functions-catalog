@@ -24,15 +24,15 @@
 # If CR_REGISTRY is set, it will override DEFAULT_CR.
 # example 1:
 # Invocation: DEFAULT_CR=gcr.io/kpt-fn CURRENT_FUNCTION=kubeval TAG=v1.2.3 ts-function-release.sh build
-# It builds gcr.io/kpt-fn/kubeval:v1.2.3, gcr.io/kpt-fn/kubeval:v1.2 and
-# gcr.io/kpt-fn/kubeval:v1.
+# It builds ghcr.io/kptdev/krm-functions-catalog/kubeval:v1.2.3, ghcr.io/kptdev/krm-functions-catalog/kubeval:v1.2 and
+# ghcr.io/kptdev/krm-functions-catalog/kubeval:v1.
 # Invocation: DEFAULT_CR=gcr.io/kpt-fn CURRENT_FUNCTION=kubeval TAG=v1.2.3 ts-function-release.sh push
 # It pushes the above 3 images.
 # example 2:
 # Invocation: CURRENT_FUNCTION=kubeval TAG=unstable ts-function-release.sh build
-# It builds gcr.io/kpt-fn/kubeval:unstable.
+# It builds ghcr.io/kptdev/krm-functions-catalog/kubeval:unstable.
 # Invocation: CURRENT_FUNCTION=kubeval TAG=unstable ts-function-release.sh push
-# It pushes gcr.io/kpt-fn/kubeval:unstable.
+# It pushes ghcr.io/kptdev/krm-functions-catalog/kubeval:unstable.
 
 # This script currently is used in functions/ts/Makefile.
 
