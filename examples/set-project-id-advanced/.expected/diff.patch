@@ -29,7 +29,7 @@ index c96b2cd..52b8640 100644
    name: subpkg
 +pipeline:
 +  mutators:
-+  - image: ghcr.io/kptdev/krm-functions-catalog/apply-setters:v0.2
++  - image: gcr.io/kpt-fn/apply-setters:v0.2
 +    configMap:
 +      project-id: foo
 diff --git a/subpkg/resources.yaml b/subpkg/resources.yaml
