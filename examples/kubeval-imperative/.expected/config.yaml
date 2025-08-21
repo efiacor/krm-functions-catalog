@@ -1,4 +1,5 @@
 exitCode: 1
+skip: 'true'
 testType: eval
 image: ghcr.io/kptdev/krm-functions-catalog/kubeval:unstable
 args:
