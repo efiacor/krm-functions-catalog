@@ -52,7 +52,7 @@ function docker_build {
   [[ -f "${override_dockerfile}" ]] && dockerfile="${override_dockerfile}"
   [[ -f "${dockerfile}" ]] || err "Dockerfile does not exist: ${dockerfile}"
 
-  echo "Using Dockerfile " $dockerfile
+  echo "Using Dockerfile ${dockerfile}" 
 
   defaults="${repo_base}/build/docker/${lang}/defaults.env"
   [[ -f "${defaults}" ]] || err "defaults file does not exist: ${defaults}"
@@ -63,7 +63,7 @@ function docker_build {
 
   if [[ ! -f "${function_dir}/go.mod" ]]; then
     function_dir="${repo_base}/functions/${lang}/"
-    echo "Setting build context to " $function_dir
+    echo "Setting build context to ${function_dir}"
   fi
 
   echo "building ${CR_REGISTRY}/${name}:${tag}"
