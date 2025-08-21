@@ -482,6 +482,7 @@ spec:
 		t.Run(test.name, func(t *testing.T) {
 			require := require.New(t)
 			pkgDir := setupInputs(t, test.resourceMap)
+			//nolint:errcheck
 			defer os.RemoveAll(pkgDir)
 
 			ls := New()

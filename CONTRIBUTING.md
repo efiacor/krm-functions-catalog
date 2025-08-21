@@ -58,7 +58,7 @@ For each function, its files spread in the follow places:
       the [catalog website].
         - golang-based functions should follow [this template][golang-template].
         - typescript-based functions should follow [this template][ts-template].
-    - A krm-fn-metadata.yaml file that follows the function metadata schema.
+    - A metadata.yaml file that follows the function metadata schema.
     - (Optional) A Dockerfile to build the docker container. If a Dockerfile is
       not defined, the [default Dockerfile for the language][docker-common] will
       be used.

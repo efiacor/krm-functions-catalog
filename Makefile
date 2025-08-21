@@ -12,7 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 SHELL=/bin/bash
-TAG := unstable
+export TAG ?= unstable
+export DEFAULT_CR ?= ghcr.io/kptdev/krm-functions-catalog
+
 
 .DEFAULT_GOAL := help
 .PHONY: help
@@ -58,9 +60,9 @@ verify-docs:
 	(cd scripts/patch_reader/ && go build -o patch_reader .)
 	scripts/verify-docs.py
 
-build: ## Build all function images. Variable 'TAG' is used to specify tag. 'dev' will be used if not set.
-	cd functions/go && $(MAKE) TAG=$(TAG) build
-	cd contrib/functions/go && $(MAKE) TAG=$(TAG) build
+build: ## Build all function images.
+	cd functions/go && $(MAKE) build
+	cd contrib/functions/go && $(MAKE) build
 
 push: ## Push images to registry. WARN: This operation should only be done in CI environment.
 	cd functions/go && $(MAKE) push

@@ -13,6 +13,7 @@ import (
 func TestFixV1alpha1ToV1(t *testing.T) {
 	dir, err := os.MkdirTemp("", "")
 	assert.NoError(t, err)
+	//nolint:errcheck
 	defer os.RemoveAll(dir)
 	err = copyutil.CopyDir("../../../../testdata/fix/nginx-v1alpha1", dir)
 	assert.NoError(t, err)
@@ -58,6 +59,7 @@ func TestFixV1alpha1ToV1(t *testing.T) {
 func TestFixV1alpha2ToV1(t *testing.T) {
 	dir, err := os.MkdirTemp("", "")
 	assert.NoError(t, err)
+	//nolint:errcheck
 	defer os.RemoveAll(dir)
 	err = copyutil.CopyDir("../../../../testdata/fix/nginx-v1alpha2", dir)
 	assert.NoError(t, err)

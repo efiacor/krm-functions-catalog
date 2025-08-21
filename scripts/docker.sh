@@ -17,8 +17,7 @@
 
 repo_base=$(cd "$(dirname "$(dirname "$0")")" || exit ; pwd)
 
-DEFAULT_CR=${DEFAULT_CR:-ghcr.io/kptdev/krm-functions-catalog/krm-fn-contrib}
-CR_REGISTRY=${CR_REGISTRY:-${DEFAULT_CR}}
+CR_REGISTRY=${DEFAULT_CR:-ghcr.io/kptdev/krm-functions-catalog/krm-fn-contrib}
 
 function err {
   echo "$1"
@@ -53,12 +52,19 @@ function docker_build {
   [[ -f "${override_dockerfile}" ]] && dockerfile="${override_dockerfile}"
   [[ -f "${dockerfile}" ]] || err "Dockerfile does not exist: ${dockerfile}"
 
+  echo "Using Dockerfile " $dockerfile
+
   defaults="${repo_base}/build/docker/${lang}/defaults.env"
   [[ -f "${defaults}" ]] || err "defaults file does not exist: ${defaults}"
   # shellcheck source=/dev/null
   source "${defaults}"
   build_args+=(--build-arg "BUILDER_IMAGE=${BUILDER_IMAGE}")
   build_args+=(--build-arg "BASE_IMAGE=${BASE_IMAGE}")
+
+  if [[ ! -f "${function_dir}/go.mod" ]]; then
+    function_dir="${repo_base}/functions/${lang}/"
+    echo "Setting build context to " $function_dir
+  fi
 
   echo "building ${CR_REGISTRY}/${name}:${tag}"
 

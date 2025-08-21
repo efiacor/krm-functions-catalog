@@ -44,10 +44,24 @@ source "${scripts_dir}"/git-tag-parser.sh
 # shellcheck source=/dev/null
 source "${scripts_dir}"/docker.sh
 
-versions=$(get_versions "${TAG}")
-IFS=',' read -ra version_array <<< "$versions"
+# Initialize array to hold all versions
+version_array=()
 
-FUNCTION_TYPE="${FUNCTION_TYPE:-curated}"
+# Split TAG by commas
+IFS=',' read -ra tags <<< "$TAG"
+
+# Process each tag
+for tag in "${tags[@]}"; do
+    # Get versions for this tag
+    versions=$(get_versions "$tag")
+    
+    # Split newline-separated versions and add to all_versions array
+    while IFS= read -r version; do
+        version_array+=("$version")
+    done <<< "$versions"
+done
+
+FUNCTION_TYPE="${2:-curated}"
 EXTRA_BUILD_ARGS="${EXTRA_BUILD_ARGS:-}"
 
 case "$1" in

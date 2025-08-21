@@ -121,7 +121,7 @@ func (s *Fix) Filter(nodes []*yaml.RNode) ([]*yaml.RNode, error) {
 	}
 
 	if !kfFound {
-		return nodes, fmt.Errorf("Kptfile not found in directory tree, make sure you specify '--include-meta-resources' flag")
+		return nodes, fmt.Errorf("kptfile not found in directory tree, make sure you specify '--include-meta-resources' flag")
 	}
 
 	// add all the newly created setter configs
